@@ -36,9 +36,9 @@ export function HomeScreen({
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
-      <div className="bg-blue-600 text-white p-6 safe-area-inset-top">
+      <div className="bg-gradient-to-r from-indigo-600 to-violet-600 text-white p-6 safe-area-inset-top">
         <h1 className="text-3xl font-bold mb-2">Checklists</h1>
-        <p className="text-blue-100">Organize your daily routines</p>
+        <p className="text-indigo-100">Organize your daily routines</p>
       </div>
 
       <div className="p-4">
@@ -47,7 +47,7 @@ export function HomeScreen({
             <p className="text-gray-500 mb-4">No checklists yet</p>
             <button
               onClick={onAddNew}
-              className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700"
+              className="inline-flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-indigo-700"
             >
               <Plus size={20} />
               Create First Checklist
@@ -71,7 +71,7 @@ export function HomeScreen({
                       <div className="flex-1">
                         <h3 className="font-semibold text-gray-800">{list.name}</h3>
                         <div className="flex items-center gap-3 mt-2 text-sm text-gray-600">
-                          <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded">
+                          <span className="bg-violet-100 text-violet-700 px-2 py-1 rounded">
                             {progress}
                           </span>
                           {list.type === 'instant-reset' && (
@@ -113,7 +113,7 @@ export function HomeScreen({
 
       <button
         onClick={onAddNew}
-        className="fixed bottom-8 right-4 safe-area-inset-bottom bg-blue-600 text-white rounded-full p-4 shadow-lg hover:bg-blue-700 active:bg-blue-800 z-40"
+        className="fixed bottom-8 right-4 safe-area-inset-bottom bg-fuchsia-600 text-white rounded-full p-4 shadow-lg hover:bg-fuchsia-700 active:bg-fuchsia-800 z-40"
       >
         <Plus size={28} />
       </button>

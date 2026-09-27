@@ -36,19 +36,19 @@ export function ListDetailScreen({
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
-      <div className="bg-blue-600 text-white p-4 safe-area-inset-top flex items-center justify-between">
+      <div className="bg-gradient-to-r from-indigo-600 to-violet-600 text-white p-4 safe-area-inset-top flex items-center justify-between">
         <div className="flex items-center gap-3 flex-1">
-          <button onClick={onBack} className="p-2 hover:bg-blue-700 rounded-lg">
+          <button onClick={onBack} className="p-2 hover:bg-white/10 rounded-lg">
             <ArrowLeft size={24} />
           </button>
           <div>
             <h1 className="text-2xl font-bold">{list.name}</h1>
-            <p className="text-blue-100 text-sm">{completedCount}/{list.items.length} done</p>
+            <p className="text-indigo-100 text-sm">{completedCount}/{list.items.length} done</p>
           </div>
         </div>
         <button
           onClick={onEdit}
-          className="p-2 hover:bg-blue-700 rounded-lg"
+          className="p-2 hover:bg-white/10 rounded-lg"
         >
           <Settings size={24} />
         </button>
@@ -74,7 +74,7 @@ export function ListDetailScreen({
                   type="checkbox"
                   checked={item.completed}
                   onChange={() => onToggleItem(item.id)}
-                  className="w-6 h-6 rounded accent-blue-600 cursor-pointer"
+                  className="w-6 h-6 rounded accent-indigo-600 cursor-pointer"
                 />
                 <span
                   className={`flex-1 text-lg ${
@@ -104,11 +104,11 @@ export function ListDetailScreen({
               onChange={(e) => setNewItemText(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleAddItem()}
               placeholder="Add new item..."
-              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
             <button
               onClick={handleAddItem}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-medium"
+              className="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 font-medium"
             >
               <Plus size={20} />
             </button>

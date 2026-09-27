@@ -12,7 +12,7 @@ export default defineConfig({
         name: 'Checklist & Routine Tracker',
         short_name: 'Checklist',
         description: 'Track your daily checklists and routines',
-        theme_color: '#3b82f6',
+        theme_color: '#4f46e5',
         background_color: '#ffffff',
         display: 'standalone',
         orientation: 'portrait-primary',

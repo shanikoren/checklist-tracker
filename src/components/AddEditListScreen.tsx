@@ -4,15 +4,15 @@ import { ArrowLeft, Save } from 'lucide-react';
 
 interface AddEditListScreenProps {
   list?: ChecklistItem;
+  existingCategories: string[];
   onBack: () => void;
   onSave: (name: string, category: string, type: ListType, intervalValue?: number, intervalUnit?: IntervalUnit) => void;
 }
 
-const categories = ['Morning', 'Work', 'Evening', 'Errands', 'Health', 'Hobbies', 'Other'];
-
-export function AddEditListScreen({ list, onBack, onSave }: AddEditListScreenProps) {
+export function AddEditListScreen({ list, existingCategories, onBack, onSave }: AddEditListScreenProps) {
   const [name, setName] = useState(list?.name || '');
-  const [category, setCategory] = useState(list?.category || 'Morning');
+  const [category, setCategory] = useState(list?.category || '');
+  const [customCategory, setCustomCategory] = useState('');
   const [type, setType] = useState<ListType>(list?.type || 'one-time');
   const [intervalValue, setIntervalValue] = useState(
     list?.type === 'interval-reset' && list.intervalHours
@@ -29,23 +29,30 @@ export function AddEditListScreen({ list, onBack, onSave }: AddEditListScreenPro
   const [error, setError] = useState('');
 
   const handleSave = () => {
+    const finalCategory = customCategory.trim() || category.trim();
+
     if (!name.trim()) {
       setError('Please enter a list name');
+      return;
+    }
+
+    if (!finalCategory) {
+      setError('Please choose or enter a category');
       return;
     }
 
     const finalIntervalValue = type === 'interval-reset' ? intervalValue : undefined;
     const finalIntervalUnit = type === 'interval-reset' ? intervalUnit : undefined;
 
-    onSave(name.trim(), category, type, finalIntervalValue, finalIntervalUnit);
+    onSave(name.trim(), finalCategory, type, finalIntervalValue, finalIntervalUnit);
   };
 
   const isEditing = !!list;
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
-      <div className="bg-blue-600 text-white p-4 safe-area-inset-top flex items-center gap-3">
-        <button onClick={onBack} className="p-2 hover:bg-blue-700 rounded-lg">
+      <div className="bg-gradient-to-r from-indigo-600 to-violet-600 text-white p-4 safe-area-inset-top flex items-center gap-3">
+        <button onClick={onBack} className="p-2 hover:bg-white/10 rounded-lg">
           <ArrowLeft size={24} />
         </button>
         <h1 className="text-2xl font-bold">{isEditing ? 'Edit List' : 'New List'}</h1>
@@ -63,41 +70,55 @@ export function AddEditListScreen({ list, onBack, onSave }: AddEditListScreenPro
                 setError('');
               }}
               placeholder="e.g. Morning Routine"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
             {error && <p className="text-red-600 text-sm mt-1">{error}</p>}
           </div>
 
           <div>
             <label className="block text-gray-700 font-medium mb-2">Category</label>
-            <div className="grid grid-cols-2 gap-2">
-              {categories.map(cat => (
-                <button
-                  key={cat}
-                  onClick={() => setCategory(cat)}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    category === cat
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
+            {existingCategories.length > 0 ? (
+              <div className="grid grid-cols-2 gap-2 mb-3">
+                {existingCategories.map(cat => (
+                  <button
+                    key={cat}
+                    onClick={() => {
+                      setCategory(cat);
+                      setCustomCategory('');
+                    }}
+                    className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                      category === cat && !customCategory
+                        ? 'bg-indigo-600 text-white'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-gray-500 mb-3">No categories yet — type one below to create your first.</p>
+            )}
+            <input
+              type="text"
+              value={customCategory}
+              onChange={(e) => setCustomCategory(e.target.value)}
+              placeholder="Or type a new category..."
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
           </div>
 
           <div>
             <label className="block text-gray-700 font-medium mb-3">List Type</label>
             <div className="space-y-3">
-              <label className="flex items-start gap-3 p-3 border-2 rounded-lg cursor-pointer" style={{ borderColor: type === 'instant-reset' ? '#2563eb' : '#e5e7eb' }}>
+              <label className="flex items-start gap-3 p-3 border-2 rounded-lg cursor-pointer" style={{ borderColor: type === 'instant-reset' ? '#4f46e5' : '#e5e7eb' }}>
                 <input
                   type="radio"
                   name="type"
                   value="instant-reset"
                   checked={type === 'instant-reset'}
                   onChange={() => setType('instant-reset')}
-                  className="mt-1 accent-blue-600 cursor-pointer"
+                  className="mt-1 accent-indigo-600 cursor-pointer"
                 />
                 <div>
                   <p className="font-medium text-gray-800">Instant Reset</p>
@@ -105,14 +126,14 @@ export function AddEditListScreen({ list, onBack, onSave }: AddEditListScreenPro
                 </div>
               </label>
 
-              <label className="flex items-start gap-3 p-3 border-2 rounded-lg cursor-pointer" style={{ borderColor: type === 'interval-reset' ? '#2563eb' : '#e5e7eb' }}>
+              <label className="flex items-start gap-3 p-3 border-2 rounded-lg cursor-pointer" style={{ borderColor: type === 'interval-reset' ? '#4f46e5' : '#e5e7eb' }}>
                 <input
                   type="radio"
                   name="type"
                   value="interval-reset"
                   checked={type === 'interval-reset'}
                   onChange={() => setType('interval-reset')}
-                  className="mt-1 accent-blue-600 cursor-pointer"
+                  className="mt-1 accent-indigo-600 cursor-pointer"
                 />
                 <div className="flex-1">
                   <p className="font-medium text-gray-800">Interval Reset</p>
@@ -124,12 +145,12 @@ export function AddEditListScreen({ list, onBack, onSave }: AddEditListScreenPro
                         min="1"
                         value={intervalValue}
                         onChange={(e) => setIntervalValue(Number(e.target.value))}
-                        className="w-16 px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-16 px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
                       />
                       <select
                         value={intervalUnit}
                         onChange={(e) => setIntervalUnit(e.target.value as IntervalUnit)}
-                        className="flex-1 px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="flex-1 px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
                       >
                         <option value="hours">Hours</option>
                         <option value="days">Days</option>
@@ -139,14 +160,14 @@ export function AddEditListScreen({ list, onBack, onSave }: AddEditListScreenPro
                 </div>
               </label>
 
-              <label className="flex items-start gap-3 p-3 border-2 rounded-lg cursor-pointer" style={{ borderColor: type === 'one-time' ? '#2563eb' : '#e5e7eb' }}>
+              <label className="flex items-start gap-3 p-3 border-2 rounded-lg cursor-pointer" style={{ borderColor: type === 'one-time' ? '#4f46e5' : '#e5e7eb' }}>
                 <input
                   type="radio"
                   name="type"
                   value="one-time"
                   checked={type === 'one-time'}
                   onChange={() => setType('one-time')}
-                  className="mt-1 accent-blue-600 cursor-pointer"
+                  className="mt-1 accent-indigo-600 cursor-pointer"
                 />
                 <div>
                   <p className="font-medium text-gray-800">One-Time</p>
@@ -158,7 +179,7 @@ export function AddEditListScreen({ list, onBack, onSave }: AddEditListScreenPro
 
           <button
             onClick={handleSave}
-            className="w-full bg-blue-600 text-white px-4 py-3 rounded-lg font-medium hover:bg-blue-700 flex items-center justify-center gap-2"
+            className="w-full bg-emerald-600 text-white px-4 py-3 rounded-lg font-medium hover:bg-emerald-700 flex items-center justify-center gap-2"
           >
             <Save size={20} />
             {isEditing ? 'Update List' : 'Create List'}
