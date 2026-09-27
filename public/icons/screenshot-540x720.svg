@@ -1,0 +1,23 @@
+<svg viewBox="0 0 540 720" xmlns="http://www.w3.org/2000/svg">
+  <rect width="540" height="720" fill="#f9fafb"/>
+  <!-- Header -->
+  <rect width="540" height="120" fill="#3b82f6"/>
+  <text x="30" y="75" font-size="36" font-weight="bold" fill="#ffffff">Checklists</text>
+  <text x="30" y="100" font-size="14" fill="#dbeafe">Organize your daily routines</text>
+
+  <!-- Sample list cards -->
+  <rect x="20" y="150" width="500" height="80" fill="#ffffff" stroke="#e5e7eb" stroke-width="1" rx="8"/>
+  <text x="30" y="180" font-size="18" font-weight="600" fill="#1f2937">Morning Routine</text>
+  <rect x="30" y="195" width="50" height="24" fill="#dbeafe" rx="4"/>
+  <text x="35" y="212" font-size="12" fill="#1e40af" font-weight="500">2/5</text>
+
+  <rect x="20" y="250" width="500" height="80" fill="#ffffff" stroke="#e5e7eb" stroke-width="1" rx="8"/>
+  <text x="30" y="280" font-size="18" font-weight="600" fill="#1f2937">Work Tasks</text>
+  <rect x="30" y="295" width="50" height="24" fill="#dbeafe" rx="4"/>
+  <text x="35" y="312" font-size="12" fill="#1e40af" font-weight="500">0/3</text>
+
+  <rect x="20" y="350" width="500" height="80" fill="#ffffff" stroke="#e5e7eb" stroke-width="1" rx="8"/>
+  <text x="30" y="380" font-size="18" font-weight="600" fill="#1f2937">Evening Checklist</text>
+  <rect x="30" y="395" width="50" height="24" fill="#dbeafe" rx="4"/>
+  <text x="35" y="412" font-size="12" fill="#1e40af" font-weight="500">4/4</text>
+</svg>
